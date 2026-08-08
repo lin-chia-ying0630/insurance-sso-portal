@@ -1,0 +1,12 @@
+services:
+  insurance-sso-portal:
+    build:
+      context: .
+    container_name: insurance-sso-portal
+    environment:
+      SSO_UPSTREAM: ${SSO_UPSTREAM:-http://host.docker.internal:8083}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "5174:8080"
+    restart: unless-stopped

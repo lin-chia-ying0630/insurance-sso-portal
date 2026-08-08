@@ -1,0 +1,9 @@
+.git
+.gitignore
+.env
+.env*.local
+dist
+node_modules
+coverage
+*.tsbuildinfo
+npm-debug.log*
