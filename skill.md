@@ -14,3 +14,4 @@ description: 維護新契約與保全的 SSO 統一入口，適用於入口卡�
 7. 完成前執行 `npm run test:unit` 與 `npm run build`；串接正式 SSO 後再驗證 Cookie、返回網址、登出與兩個子系統的單一簽入。
 8. 本機模擬身分只能放在 `.env.development.local`；不得放在共用 `.env`，避免污染 Vitest 或 production mode。
 9. Docker 使用 Nginx 非 root `8080`、Host `5174` 與 `/health`；`/api` 只透過 `SSO_UPSTREAM` 代理，不得在 production image 加入假登入。
+10. 本機 `docker compose` 可使用不對外開 Port 的 mock SSO sidecar；必須以 `SSO_UPSTREAM` 與 production image 解耦，不得作為正式身分或授權來源。

@@ -61,7 +61,7 @@ docker compose ps
 
 | 設定 | 預設值 | 用途 |
 | --- | --- | --- |
-| `SSO_UPSTREAM` | `http://host.docker.internal:8083` | Nginx 將 `/api/*` 代理到真實 SSO 後端 |
+| `SSO_UPSTREAM` | `http://portal-sso-dev:8080` | Nginx 將 `/api/*` 代理到本機 mock SSO；正式環境設為真實 SSO |
 | Host Port | `5174` | 電腦與手機使用的統一入口 Port |
 | Health check | `/health` | Docker 每 10 秒檢查 Nginx 是否正常 |
 
@@ -71,7 +71,7 @@ docker compose ps
 SSO_UPSTREAM=https://sso.example.internal docker compose up -d --build
 ```
 
-Docker 是 production mode，不會載入 `.env.development.local` 的模擬使用者；若 SSO 後端未啟動，網頁會明確顯示無法確認登入狀態。
+Docker 前端 image 是 production mode，不會載入 `.env.development.local` 或包含假登入。本專案的 `docker compose` 額外啟動不對外開 Port 的 `portal-sso-dev` sidecar，只回傳本機畫面驗證所需的使用者與兩個系統授權。正式部署必須設定 `SSO_UPSTREAM`，由真實身分平台取代 sidecar。
 
 ## 畫面規範
 
