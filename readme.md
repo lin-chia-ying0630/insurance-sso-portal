@@ -86,3 +86,10 @@ Docker 前端 image 是 production mode，不會載入 `.env.development.local` 
 ## 邊界
 
 本次不建立資料庫、Entity 或 Migration；使用者身分、Session、角色與系統授權一律由 SSO/後端裁決。正式串接時尚需由身分平台提供上述 API 與 Cookie 安全設定。
+
+## 本機 SSO Token 契約
+
+- `portal-sso-dev` 以 RS256 簽發 5 分鐘 JWT，並公開 `/.well-known/jwks.json`。
+- JWT 必須包含 `iss`、`sub`、`aud`、`roles`、`iat`、`exp` 與 `jti`；兩個系統 audience 分別為 `NEW_CONTRACT`、`POLICY_SERVICE`。
+- Token 只放在 `SSO_ACCESS_TOKEN` HttpOnly、SameSite=Strict Cookie，不放 URL、localStorage 或 JavaScript 可讀狀態。
+- 本機 HTTP 為開發用途；正式 HTTPS 必須加上 Cookie `Secure`，並改用正式 IdP 與固定 issuer。

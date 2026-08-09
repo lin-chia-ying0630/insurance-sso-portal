@@ -1,9 +1,12 @@
 services:
   portal-sso-dev:
-    image: nginxinc/nginx-unprivileged:1.30.4-alpine-slim
+    build: ./docker/mock-sso
     container_name: insurance-sso-portal-dev-sso
-    volumes:
-      - ./docker/mock-sso.conf:/etc/nginx/conf.d/default.conf:ro
+    environment:
+      SSO_ISSUER: ${SSO_ISSUER:-http://192.168.1.104:8083}
+      PORTAL_URL: ${PORTAL_URL:-http://192.168.1.104:5174/}
+    ports:
+      - "8083:8080"
     healthcheck:
       test: ["CMD", "wget", "-q", "-O", "-", "http://127.0.0.1:8080/health"]
       interval: 5s

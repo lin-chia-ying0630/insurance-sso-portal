@@ -15,3 +15,4 @@ description: 維護新契約與保全的 SSO 統一入口，適用於入口卡�
 8. 本機模擬身分只能放在 `.env.development.local`；不得放在共用 `.env`，避免污染 Vitest 或 production mode。
 9. Docker 使用 Nginx 非 root `8080`、Host `5174` 與 `/health`；`/api` 只透過 `SSO_UPSTREAM` 代理，不得在 production image 加入假登入。
 10. 本機 `docker compose` 可使用不對外開 Port 的 mock SSO sidecar；必須以 `SSO_UPSTREAM` 與 production image 解耦，不得作為正式身分或授權來源。
+11. 子系統只接受通過 RS256 簽章、issuer、到期時間與自身 audience 驗證的 JWT；Token 只使用 HttpOnly Cookie 傳遞，禁止 URL fragment/query 與 Web Storage。
